@@ -57,7 +57,7 @@ const UserProfile = ({match}) => {
                     <h5>{user?.desc}</h5>         */}
                    <div className="profileRightBottom">
            
-                      <RightBar userId={userId} />
+                      {/* <RightBar userId={userId} /> */}
                     </div>   
                           
   
