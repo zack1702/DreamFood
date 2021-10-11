@@ -1,0 +1,24 @@
+.signin-container {
+	background-image: url('./assets/images/IMG_5265.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	opacity: 0.8;
+}
+
+.home-page {
+	height: 100vh;
+}
+
+.banner-image {
+	background-image: url('./assets/images/sheff.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center;
+	opacity: 1;
+	height: 40%;
+}
+.container{
+	position: relative;
+	top:100%;
+}

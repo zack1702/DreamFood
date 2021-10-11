@@ -1,0 +1,6 @@
+
+export const GET_USER='GET_USER'
+export const CREATE_USER='CREATE_USER'
+export const FOLLOW_USER='FOLLOW_USER'
+export const UNFOLLOW_USER='UNFOLLOW_USER'
+export const GET_FRIENDS='GET_FRIENDS'
