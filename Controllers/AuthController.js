@@ -1,7 +1,7 @@
 const User = require('../Models/User');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const fs = require('fs') 
+
 
 require("dotenv").config();
 //login
@@ -35,6 +35,7 @@ exports.signinController = async (req, res) => {
                 token,
                 user: { _id, username, email, role,profilPic},
             })
+            console.log(token,user)
         })
     } catch (err) {
         console.log('singinController error: ', err);
@@ -45,8 +46,7 @@ exports.signinController = async (req, res) => {
 }
 //register
 exports.signupController = async (req, res) => {
-    console.log(req.file)
-    const {filename}=req.file;
+    
     const { username, email, password } = req.body;
     try {
         const user = await User.findOne({ email });
@@ -58,13 +58,29 @@ exports.signupController = async (req, res) => {
         const newUser = new User();
         newUser.username = username;
         newUser.email = email;
-        newUser.fileName = filename;
+        
         const salt = await bcrypt.genSalt(10);
         newUser.password = await bcrypt.hash(password, salt);
-        await newUser.save();
-        res.json({
-            successMessage: 'Registration success. Please signin',
+        
+        const payload={
+            user:{
+                _id:newUser._id
+            }
+        }
+        jwt.sign(payload,process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIREIN }, (err, token) => {
+            if(err) console.log('jwt error: ', err);
+            const { _id, username, email, role,profilPic }  = newUser;
+            res.json({
+                token,
+                user: { _id, username, email, role,profilPic},
+                successMessage: 'Registration success. Welcom to DreamFood',
+            })
+            
         })
+        await newUser.save();
+        
+       
+        
     } catch (err) {
         console.log('signupController error: ', err);
         res.status(500).json({

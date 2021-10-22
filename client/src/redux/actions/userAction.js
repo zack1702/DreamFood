@@ -1,6 +1,6 @@
 import {START_LOADING, STOP_LOADING} from '../constants/loadingConstants'
 import { SHOW_ERROR_MESSAGE, SHOW_SUCCESS_MESSAGE} from '../constants/messageConstants'
-import { GET_USER,FOLLOW_USER,CREATE_USER,UNFOLLOW_USER,GET_FRIENDS} from '../constants/userConstants'
+import { GET_USER,FOLLOW_USER,CREATE_USER,UNFOLLOW_USER,GET_FRIENDS,GET_USERPOSTS} from '../constants/userConstants'
 import axios from 'axios'
 
 
@@ -9,7 +9,7 @@ import axios from 'axios'
     try{
         
         dispatch({type : START_LOADING})
-        const response = await axios.post('/api/user/auth',formData);
+        const response = await axios.post('/api/user/auth/signup',formData);
         dispatch({type:STOP_LOADING})
         dispatch({type:SHOW_SUCCESS_MESSAGE,payload: response.data.successMessage})
         dispatch({type:CREATE_USER,payload: response.data.user})
@@ -80,6 +80,21 @@ export const unfollowUser = (userId) => async dispatch =>{
         console.log('unfollowUser Api err',err)
         dispatch({type:STOP_LOADING})
         dispatch({type:SHOW_ERROR_MESSAGE,payload: err.response.data.errorMessage})
+    }
+}
+export const getUserPosts = (userId) => async dispatch =>{
+    
+    try{ 
+        dispatch({type : START_LOADING})
+        const response = await axios.get(`api/posts/${userId}`);
+        dispatch({type:STOP_LOADING})
+        dispatch({type:GET_USERPOSTS,payload: response.data})
+       
+        
+    }catch(err){
+        console.log('getUser Api err',err)
+        dispatch({type:STOP_LOADING})
+        dispatch({type:SHOW_ERROR_MESSAGE, payload: err.response.data.errorMessage})
     }
 }
   

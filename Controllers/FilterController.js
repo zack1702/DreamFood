@@ -27,7 +27,7 @@ exports.searchByQuery = async (req, res) => {
         case 'category':
             products= await Product.find({product_category : query})
     break;
-    }if(!products.length >0){
+    }if(!products?.length >0){
         products = await Product.find({})
     }
     res.json({products})

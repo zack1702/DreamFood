@@ -2,6 +2,8 @@ const express= require('express')
 const app=express()
 const morgan= require('morgan')
 const multer = require("multer");
+const fileupload = require("express-fileupload");
+
 const cors =require('cors')
 const CategoryRoute=require('./routes/CategoryRoutes')
 const ProductRoute=require('./routes/ProductRoutes')
@@ -12,6 +14,7 @@ const PostRoute=require('./routes/PostRoutes')
 const ConversationRoute=require('./routes/ConversationRoutes')
 const MessageRoute=require('./routes/MessageRoutes')
 const CartRoute=require('./routes/CartRoute')
+const OrderRoute=require('./routes/OrderRoute')
 const cookieParser= require('cookie-parser')
 const connectDB=require('./config/db')
 //const morgan = require('morgan')
@@ -21,17 +24,21 @@ app.use(cors());
 app.use(express.json())
 app.use(cookieParser())
 
+
 //  get access to images in uploads folder middleware/express.static('file') path/uploads,
 app.use('/uploads',express.static('uploads'))
 
 app.use('/api/auth',AuthRoutes)
 app.use('/api/user',UserRoute)
+
+
 app.use('/api/category',CategoryRoute)
 app.use('/api/product',ProductRoute)
 app.use('/api/filter',FilterRoute)
 app.use('/api/cart',CartRoute)
+app.use('/api/order',OrderRoute)
 
-app.use("/api/posts", PostRoute);
+ app.use("/api/posts", PostRoute);
 app.use("/api/conversations", ConversationRoute);
  app.use("/api/messages", MessageRoute);
 

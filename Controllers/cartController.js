@@ -5,9 +5,13 @@ const Cart = require('../Models/Cart')
 
 
 exports.createCart = async (req, res) => {
-    const newCart = new Cart(req.body);
-
+    const user= req.params.userId
+    const products= req.body.products
     try {
+      const newCart = new Cart({
+        user,
+        products
+      })
       const savedCart = await newCart.save();
       res.status(200).json(savedCart);
     } catch (err) {

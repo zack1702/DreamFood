@@ -1,38 +1,31 @@
-import React, {useState , useEffect} from 'react'
+import React, {useState, useEffect } from 'react'
 import {Link} from 'react-router-dom'
 import equals from 'validator/lib/equals';
 import isEmpty from 'validator/lib/isEmpty';
 import isEmail from 'validator/lib/isEmail';
 import './SignUp.css'
 import {showErrorMsg, showSuccessMsg, showLoading}from '../helpers/Message'
-import { signup } from '../Api/Auth';
-import {  isAuthenticated } from '../helpers/auth';
+import { signup,signin } from '../Api/Auth';
+ import {  isAuthenticated, setAuthentication } from '../helpers/auth';
 import {  useHistory } from 'react-router-dom';
+
+
+
 const SignUp = () => {
+    let history = useHistory();
+  
     const[formData,setFormData]=useState({
         username: '',
         email: '',
         password: '',
         password2: '',
-        profilPic:null,
         successMsg: false,
         errorMsg: false,
         loading: false
     })
-    const {username, email, password, password2,profilPic, successMsg, errorMsg, loading} = formData;
-    let history = useHistory();
-    useEffect(() => {
-        if(isAuthenticated() && isAuthenticated().role === 1){
-            //console.log('Redirection to admin dashboard');
-            history.push('/admin/dashboard');
-        }else if(isAuthenticated() && isAuthenticated().role === 0){ 
-            //console.log('Redirecting to user dashboard');
-            history.push('/user/dashboard');
-        }
-    }, [history])
+    const {username, email, password, password2, successMsg, errorMsg, loading} = formData;
     
-    const handleChange = e => {
-        //console.log(evt);
+    const handleChange = e => {   
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
@@ -40,6 +33,7 @@ const SignUp = () => {
             errorMsg: ''
         });
     }
+   
  
     const handleSubmit = (evt) => {
         evt.preventDefault();
@@ -59,16 +53,20 @@ const SignUp = () => {
                 errorMsg: 'Passwords do not match'
             })
         } else {
-            const { username, email, password, profilPic } = formData;
-            const data = { username, email, password, profilPic };
-            
-            setFormData({
-                ...formData,
-                loading: true,
-                successMsg: 'Validation success'
-            });
+            const { username, email, password } = formData;
+            const data = { username, email, password };
+           
             signup(data).then(response => {
                     console.log(response);
+                    const {token,user}=response.data
+                    setAuthentication(token,user)
+                    if(isAuthenticated() && isAuthenticated().role === 1){
+                        console.log('Redirection to admin dashboard');
+                       history.push('/admin/dashboard');
+                   }else if(isAuthenticated() && isAuthenticated().role === 0){ 
+                       console.log('Redirecting to user dashboard');
+                      history.push(`/user/${user._id}`);
+                    }
                     setFormData({
                         ...formData,
                         username: '',
@@ -80,19 +78,19 @@ const SignUp = () => {
                         successMsg: response.data.successMessage
                     })
                 })
-                .catch ((err) => {
+                    .catch ((err) => {
                     console.log('Axios signup error: ', err);
                     setFormData({...formData,loading: false, errorMsg: err.response.data.errorMessage});
                 });
             }
     }
 
+
 const showSignupForm = () => ( 
     <div className='form__container' onSubmit={handleSubmit}>
         <div className='row px-10 vh-100'>
             <div className='col-md-5 align-self-center mx-auto '>
                 <form className='signup-form'  >
-                { username }
                 <div className='form-group input-group'>
                     <div className='input-group-prepend'>
                         <span className='input-group-text'>
@@ -155,6 +153,7 @@ const showSignupForm = () => (
                         type='password'
                         onChange={handleChange}
                     />
+                 
                </div>
                 {/* signup button */}
                 <div className='form-group'>

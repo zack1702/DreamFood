@@ -1,13 +1,36 @@
 const Order = require('../Models/Order')
+const Cart = require('../Models/Cart')
 
 exports.createOrder = async (req, res) => {
-    const newOrder = new Order(req.body);
-    try {
-      const savedOrder = await newOrder.save();
-      res.status(200).json(savedOrder);
-    } catch (err) {
-      res.status(500).json(err);
-    }
+  try {
+    const cart = req.body.cartId;
+    const total = req.body.total;
+    const user = req.body.userId;
+
+    const order = new Order({
+      cart,
+      user,
+      total
+    });
+
+    const orderDoc = await order.save();
+     const cartDoc = await Cart.findById(orderDoc.cart._id)
+
+    const newOrder = {
+      _id: orderDoc._id,
+      user: orderDoc.user,
+      total: orderDoc.total,
+      products: cartDoc.products
+    };
+    res.status(200).json({
+      success: true,
+      message: `Your order has been placed successfully!`,
+      order: newOrder
+    })} catch (error) {
+      res.status(400).json({
+        error: 'Your request could not be processed. Please try again.'
+      });
+  }
 }
 
 exports.getMyOrder = async (req, res) => {

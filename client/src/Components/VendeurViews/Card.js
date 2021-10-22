@@ -1,3 +1,4 @@
+import './Card.css'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import {deleteProduct} from '../../redux/actions/productAction'
@@ -8,17 +9,14 @@ const Card = ({product, homePage=false, adminPage= false}) => {
         <div className='col-md-4  my-3'>
             <div className='card h-100'>
                 <a href ='#!'>
-                    <img className='img-fluid w-100' src={`/uploads/${product.fileName}`} alt=''/>
+                    <img className='img-fluid w-100'id='product_img' src={`/uploads/${product.fileName}`} alt=''/>
                 </a>
                     <div className='card-body text-center'>
                         <h5>{product.product_name}</h5>
                         <hr/>
                         <h6 className='mb-3'>
                             <span className='text-secondary mr-2'>
-                                {product.product_price.toLocaleString('en-US',{
-                                    style:'currency',
-                                    currency:'USD'
-                                })}
+                                {product.product_price }
                             </span>
                         </h6>
                         <p>{product.product_description.lenght>60
@@ -45,9 +43,7 @@ const Card = ({product, homePage=false, adminPage= false}) => {
                                        View Product
                                 </Link>
                                 
-                                <button type='button' className='btn btn-warning btn-sm mr-1 my-1' >                                      
-                                    Add to Cart 
-                                </button> 
+                                
                                 </> 
                         }
                     </div>

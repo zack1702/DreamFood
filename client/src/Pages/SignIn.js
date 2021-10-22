@@ -6,8 +6,11 @@ import { showErrorMsg,showLoading } from '../helpers/Message';
 
 import { setAuthentication, isAuthenticated } from '../helpers/auth';
 import { signin } from '../Api/Auth';
+
+
 const Signin = () => {
      let history = useHistory();
+
      useEffect(() => {
        if(isAuthenticated() && isAuthenticated().role === 1){
              console.log('Redirection to admin dashboard');
@@ -17,6 +20,7 @@ const Signin = () => {
            history.push('/user/dashboard');
          }
      }, [history])
+     
     const[formData, setFormData] = useState({
         email: '',
         password: '',

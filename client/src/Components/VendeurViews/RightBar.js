@@ -40,30 +40,29 @@ console.log(friends)
     return (
        <>
      
-        {/* <h4 className="rightbarTitle">User friends</h4>
+       <h4 className="rightbarTitle">User friends</h4>
         <div className="rightbarFollowings">
         {friends.map((friend) => (
             
               <div className="rightbarFollowing">
                 <img
                   src={
-                    friend.fileName
+                    friend?.fileName
                   }
                   alt=""
                   className="rightbarFollowingImg"
                 />
-                <span className="rightbarFollowingName">{friend.username}</span>
+                <span className="rightbarFollowingName">{friend?.username}</span>
               </div>
             
           ))}
-          </div> */}
-         
-         {/* {user.username !== currentUser.username && (
+          </div> 
+      
            <button className="rightbarFollowButton" onClick={handleClick}>
              {followed ? "Unfollow" : "Follow"}
              {followed ? <Remove /> : <Add />}
            </button>
-         )} */}
+        
  </>)} 
  
   

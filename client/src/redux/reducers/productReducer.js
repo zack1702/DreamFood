@@ -1,4 +1,3 @@
-
 import {GET_PRODUCTS,GET_PRODUCT,CREATE_PRODUCT,DELETE_PRODUCT} from '../constants/productConstant'
 
 const INITIAL_STATE = {

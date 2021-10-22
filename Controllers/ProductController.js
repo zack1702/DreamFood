@@ -85,12 +85,20 @@ exports.getProduct = async (req, res) => {
     }
 }
 exports.editProduct = async (req, res) => {
-    req.body.fileName= req.file.filename;//filename of image in req.file d'apres multer
-   
     const productId = req.params.productId;
+    if(req.file !== undefined){
+        req.body.fileName= req.file.fileName;
+    }
+    // req.body.fileName= req.file.fileName;//filename of image in req.file d'apres multer
+   
+   
     const oldProduct = await Product.findByIdAndUpdate(productId,req.body)
-    fs.unlink(`uploads/${oldProduct.fileName}`,(err)=>{
-        if(err) throw err;})
+    
+    if(req.file !== undefined && 
+        req.file.fileName!== oldProduct.fileName )
+    {fs.unlink(`uploads/${oldProduct.fileName}`,(err)=>{
+        if(err) throw err;})}
+        
         res.json({
             successMessage: 'Product successfully updated',
         });

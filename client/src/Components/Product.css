@@ -1,0 +1,33 @@
+.container{
+    
+  margin: 5px;
+  min-width: 280px;
+  height: 350px;
+ 
+  align-items: center;
+  justify-content: center;
+  background-color: #f7fdf5;
+  position: relative;
+}
+  .container:hover {
+    opacity: 1;
+  }
+#img{
+    height: 75%;
+  position: relative;
+  top:10px;
+  left:0;
+}
+.card{
+   display: flex;
+
+}
+.details{
+    display:block;
+    margin: 10px ;
+    justify-items: center;
+}
+.adding__container{
+    display:flex;
+    justify-content: space-evenly;
+}

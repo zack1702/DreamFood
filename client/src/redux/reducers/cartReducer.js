@@ -1,20 +1,25 @@
-import{ADD_PRODUCT} from '../constants/cartConstants'
+import{ADD_TO_CART,DELETE_FROM_CART} from '../constants/cartConstants'
 
 const INITIAL_STATE = {
-    products :[],
-    quantity:0,
-    total:0
+    cart:[]
+}
+if (localStorage.getItem('cart')) {
+	INITIAL_STATE.cart = JSON.parse(localStorage.getItem('cart'));
+} else {
+	INITIAL_STATE.cart = [];
 }
 
 const cartReducer = (state = INITIAL_STATE, action)=>{
     switch (action.type){
-        case ADD_PRODUCT:
-            return{
-                ...state,
-                products:[...state.products,action.payload],
-                quantity:state.quantity+1,
-                total: state.total+ action.payload.price*action.payload.quantity
-            }
+        case ADD_TO_CART:
+            return {
+				cart: [...action.payload],
+			};
+        case DELETE_FROM_CART:
+                return {
+                 
+                  cart:[...action.payload]
+                };
         
         default:
             return state

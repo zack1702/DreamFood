@@ -117,8 +117,10 @@ const ShowProductModal = () => {
                                         name='product_description' value={product_description}></textarea>
                                     </div>
                                     
-                                    <div className='form-row'>
-                                    
+                                    <div className='form-group col-md-6'>
+                                    <label className='text-secondary'>
+                                                    Category
+                                         </label>
                                          <select value={product_category} name='product_category' onChange={handleProductChange} aria-label=".form-select-sm example">
                                             {categories && categories.map( (e) => ( 
                                                 <option name='product_category'
@@ -133,7 +135,7 @@ const ShowProductModal = () => {
                                     </select>
                                     <div className='form-group col-md-6'>
                                         <label className='text-secondery'>
-                                            Quantity
+                                           InStock
                                         </label>
                                         <input type='number' className='form-control' min='0' 
                                         onChange={handleProductChange}

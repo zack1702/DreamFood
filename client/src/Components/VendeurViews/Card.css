@@ -1,0 +1,10 @@
+#product_img{
+    height:100%;
+    width:auto;
+    margin-top: 15px;
+
+}
+.card{
+    display:flex;
+
+}

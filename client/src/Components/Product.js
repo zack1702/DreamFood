@@ -1,27 +1,34 @@
-// import { Add, Remove } from "@material-ui/icons";
-
+ import { Add, Remove } from "@material-ui/icons";
+//  import './Product.css'
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
  import { getProduct } from "../redux/actions/productAction";
  import { useDispatch,useSelector } from "react-redux";
-import{addProduct} from '../redux/actions/cartAction'
+import{addToCart} from '../redux/actions/cartAction'
+import { isAuthenticated } from "../helpers/auth";
 
-const Product = ({match}) => {
+const Product = ({match,history}) => {
   
     // const productId = location.pathname.split("/")[2];
    
      const {product}=useSelector(state=>state.products)
       const [quantity, setQuantity] = useState(1);
-      const [color, setColor] = useState([]);
-      const [size, setSize] = useState([]);
      const dispatch = useDispatch();
     const productId=match.params.productId
  
      
       useEffect(() => {
          dispatch(getProduct(productId))
-          
-    }, [dispatch,productId,product]);
-  
+    }, [dispatch,productId]);
+
+    const handleGoBack= () =>{
+      history.push("/")
+    }
+    const handleAddToCart = () => {
+      dispatch(addToCart(product,quantity));
+      history.push('/shop')
+    };
+    
      const handleQuantity = (type) => {
        if (type === "dec") {
          quantity > 1 && setQuantity(quantity - 1);
@@ -29,47 +36,46 @@ const Product = ({match}) => {
          setQuantity(quantity + 1);
        }
      };
-     const handleClick = () => {
-      dispatch(
-        addProduct({ ...product, quantity, color, size })
-      );
-    };
   
   
     return (
-      <div className='col-md-4  my-3'>
-        <div className='card h-100'>
-             {<a href ='#!'>
-                <img className='img-fluid w-100' src={`/uploads/${product?.fileName}`} alt=''/>
-            </a>  }
-        <div className='card-body text-center'>
-                    <h5>{product?.product_name}</h5>
-                    <hr/>
-                    <h6 className='mb-3'>
+      <div className='container'>
+     
+          <button className="btn btn-light text-primary"
+          onClick={handleGoBack}>
+          Go Back
+          </button>
+          <div className='card'>
+            <div className='productImg'>
+                <img className='img-fluid w-100 'id='img' src={`/uploads/${product?.fileName}`} alt=''/>
+            </div>
+            <div className='details'>
+                      <h5>{product?.product_name}</h5>
+                      <hr/>
+                      <h6 className='mb-3'>price
                         <span className='text-secondary mr-2'>
                           {product?.product_price}
                       </span>
                   </h6>
                   <p>{product?.product_description} </p>
                   <div className='adding__container'>
-                    <input type='button'  name='dec' onClick={() => handleQuantity("dec")} />
-                         {quantity}  
-                    <input type='button' name='asc' onClick={() => handleQuantity("inc")} />
-                    <input type='text'   onChange={(e) => setSize(e.target.value)}/>
-                {size?.map((s) => (
-                  <option key={s}>{s}</option>
-                ))}
+                    <h6> Quantity</h6>
               
-                    {/* <input type='button' onClick={handleClick}/>
-                    <select>{product.color?.map((c) => (
-                        <option color={c} key={c} onClick={() => setColor(c)} />
-                      ))}</select> */}
-                
-       
-         </div>         
+                    <input type='button' placeholder="_" name='dec' onClick={() => handleQuantity("dec")} />
+                       <input type='text' value={quantity}  />
+                      
+                    <input type='button' placeholder="+" name='asc' onClick={() => handleQuantity("inc")} />
+                <button className='btn btn-dark btn-large btn-block mb-5 py-2'
+                                disabled={product?.product_quantity <= 0}
+                                onClick={handleAddToCart}
+                              >
+                                Add to Cart
+                              </button>
+               </div>         
       </div>
       </div>
-       </div> 
+     
+       </div>
     )
             
   };

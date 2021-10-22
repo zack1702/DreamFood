@@ -24,17 +24,22 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    followers: {
-        type: Array,
-        default: [],
-      },
-      followings: {
-        type: Array,
-        default: [],
-      },
-      fileName: {
+    followers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    } ],
+        
+      followings: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'User'
+    } ],
+    userPosts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Post'
+    } ],
+     profilPic: {
         type: String,
-        required: true
+        default:null
     },
     
 }, { timestamps: true }

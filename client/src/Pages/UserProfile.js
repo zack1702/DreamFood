@@ -1,12 +1,13 @@
 
-import React,{useEffect} from 'react'
+import React from 'react'
 import {useDispatch,useSelector } from 'react-redux'
-import RightBar from '../Components/VendeurViews/RightBar'
-//import CloseFriend from '../Components/CloseFriend'
-import { getUser} from '../redux/actions/userAction'
+import Share from '../Components/Share'
+import Post from '../Components/Post'
+import { getUser,getUserPosts} from '../redux/actions/userAction'
 import './UserProfile.css'
 
-
+import {  useEffect, useState } from "react";
+import axios from "axios";
 
 
 const UserProfile = ({match}) => {
@@ -15,30 +16,31 @@ const UserProfile = ({match}) => {
      const {user} = useSelector(state=>state.users)
 
     const userId= match.params.userId
-  
+    // const [userPost, setUserPost] = useState({});
     
     useEffect(() => {
             dispatch(getUser(userId))
-            
+            // dispatch(getUserPosts(userId))
        }, [dispatch,userId]);
-    
+
+       
    
     return (
       <>
       <div className='profile__container'>
             <div className='profile__left'>
-              {/* <RightBar user = {user} /> */}
-            
+              <Share  />
+               {/* <Post post={userPost}/>  */}
             </div>
            
             <div className='profile__center'>
-            
+                  <h5>{user?.username}</h5>
+
             </div>
 
             <div className='profile__right'>
                 <div className="profileRightTop">
                   <div className="profileCover">
-                  <h5>{user?.username}</h5>
                     <img
                       className="profileUserImg"
                       src={user?.fileName}
@@ -56,8 +58,8 @@ const UserProfile = ({match}) => {
                     <hr/>
                     <h5>{user?.desc}</h5>         */}
                    <div className="profileRightBottom">
-           
-                      {/* <RightBar userId={userId} /> */}
+                   <h5>{user?.followings.map(f=>f?.username)}</h5>
+                       
                     </div>   
                           
   

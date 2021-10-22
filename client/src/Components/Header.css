@@ -2,12 +2,16 @@
     padding: 15px 20px;
     display:flex;
     position: sticky;
-    background-color: white;
+    background-color: #ffffffd2;
     z-index:100;
     top:0;
     justify-content: space-evenly;
-    
+    box-shadow: 0px 4px 4px 0px #00000040;
+
 }
+/* .logo{
+    background-image: url('');
+} */
 .header__centre {
     display:flex;
     justify-content: space-between;

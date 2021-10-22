@@ -8,7 +8,7 @@ const ProductSchema = new mongoose.Schema({
     },
     fileName: {
         type: String,
-        required: true
+        // required: true
     },
     product_description: {
         type: String,

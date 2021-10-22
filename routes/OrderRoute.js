@@ -1,13 +1,13 @@
 const express = require('express')
 const router= express.Router()
 
-const ordreController = require('../Controllers/ordreController')
+const orderController = require('../Controllers/orderController')
 const { authenticateJWT } = require('../middleware/Authenticator')
 
 
-router.post('/',authenticateJWT ,ordreController.createOrdre)
-router.get("/:userId",authenticateJWT , ordreController.getMyOrdre)
-router.delete("/:id",authenticateJWT , ordreController.deleteOrdre)
+router.post('/addOrder' ,orderController.createOrder)
+router.get("/:userId" , orderController.getMyOrder)
+router.delete("/:id",authenticateJWT , orderController.deleteOrder)
 
-router.put('/:id',authenticateJWT, ordreController.editOrdre)
+router.put('/:id',authenticateJWT, orderController.editOrder)
 module.exports = router;

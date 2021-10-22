@@ -4,7 +4,9 @@ const User = require('../Models/User');
 exports.getUser =async (req, res) => {
     try {
       const userId = req.params.userId
-      const user = await User.findById(userId);
+      const user = await User.findById(userId)
+      .populate({path:'followings',select:'username',model:'User'})
+      .populate({path:'followers',select:'username',model:'User'})
      
       res.status(200).json(user);
     } catch (err) {
@@ -69,6 +71,21 @@ exports.followingsList= async(req,res)=>{
       } catch (err) {
         res.status(500).json(err);
       }
+}
+exports.createPost = async(req,res)=>{
+ 
+  try {
+    const newPost = new Post();
+    newPost.userId=req.params.userId
+    
+    newPost.desc=req.body.desc
+    newPost.img=req.body.img
+    const savedPost = await newPost.save();
+   
+    res.status(200).json(savedPost);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 }
 
 //   exports.updateUser =async (req, res) => {

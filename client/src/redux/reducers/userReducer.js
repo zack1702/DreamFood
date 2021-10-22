@@ -1,5 +1,5 @@
 
-import {GET_USER,FOLLOW_USER,CREATE_USER,GET_FRIENDS,UNFOLLOW_USER}  from '../constants/userConstants'
+import {GET_USER,FOLLOW_USER,CREATE_USER,GET_FRIENDS,UNFOLLOW_USER,GET_USERPOSTS}  from '../constants/userConstants'
 
 const INITIAL_STATE = {
     users:[]
@@ -17,7 +17,12 @@ const userReducer= ( state=INITIAL_STATE,action)=>{
                 ...state,
                   user:action.payload
               }
-       
+              case GET_USERPOSTS:
+              return{
+                ...state,
+                  user:action.payload
+              }
+              
         case CREATE_USER:
                 return{
                     users:[...state.users,action.payload]

@@ -4,9 +4,15 @@ const User = require("../Models/User");
 
 //create a post
 
-router.post("/", async (req, res) => {
-  const newPost = new Post(req.body);
+router.post("/:userId", async (req, res) => {
+  const userPostId=req.params.userId
+  const {desc,img}=req.body
   try {
+    const user= await User.findOneAndUpdate({userId: userPostId},{ $push: { posts: newPost._id} })
+    const newPost = new Post()
+    newPost.userId=userPostId
+    newPost.desc=desc
+    newPost.img=img
     const savedPost = await newPost.save();
     res.status(200).json(savedPost);
   } catch (err) {
@@ -61,14 +67,14 @@ router.put("/:id/like", async (req, res) => {
 });
 //get a post
 
-router.get("/:id", async (req, res) => {
-  try {
-    const post = await Post.findById(req.params.id);
-    res.status(200).json(post);
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
+//  router.get("/:id", async (req, res) => {
+//    try {
+//      const post = await Post.findById(req.params.id);
+//      res.status(200).json(post);
+//    } catch (err) {
+//      res.status(500).json(err);
+//    }
+//  });
 
 //get timeline posts
 
@@ -87,11 +93,12 @@ router.get("/timeline/:userId", async (req, res) => {
   }
 });
 //get user's all posts
-router.get("/profile/:username", async (req, res) => {
+router.get("/:userId", async (req, res) => {
   try {
-    const user = await User.findOne({ username: req.params.username });
-    const posts = await Post.find({ userId: user._id });
-    res.status(200).json(posts);
+    const currentUser = await User.findById(req.params.userId);
+    const userPosts = await Post.find({ userId: currentUser._id });
+    res.status(200).json(userPosts);
+   
   } catch (err) {
     res.status(500).json(err);
   }

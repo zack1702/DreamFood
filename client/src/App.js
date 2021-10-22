@@ -26,7 +26,7 @@ const App = () => {
         <Route path='/signup' exact component={SignUp} />
         <Route path='/signin' exact component={SignIn} />
         <Route path='/product/:productId' exact component={Product} />
-        <Route path='/cart/userId' exact component={Cart} />
+        <Route path='/cart' exact component={Cart} />
         <AdminRoute  path='/admin/dashboard' component={VendeurProfile} />
         <AdminRoute  path='/admin/edit/product/:productId' component={EditProduct} />
         <UserRoute  path='/user/:userId' component={UserProfile} />

@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Link, withRouter} from 'react-router-dom';
 import { isAuthenticated, logout } from '../helpers/auth';
 import {useSelector} from 'react-redux'
-import FaceIcon from '@mui/icons-material/Face';
+
 import SearchIcon from '@mui/icons-material/Search';
 import './Header.css'
 
@@ -11,9 +11,12 @@ import { ShoppingCartOutlined } from "@material-ui/icons";
 
 
 const Header = ({history}) => {
-    const quantity = useSelector(state=>state.cart.quantity)
- 
-    
+    const {cart}=useSelector(state=>state.cart)
+    // const cartItems = localStorage.getItem('cart')
+    // ? JSON.parse(localStorage.getItem('cart'))
+    // : [];
+    const {user}=useSelector(state=>state.users)
+    const quantity = cart?.length;
     const handleLogout = evt => {
         logout(() => {
             history.push('/signin');
@@ -23,7 +26,7 @@ const Header = ({history}) => {
     const showNavigation = () => (
         <div className="header_view"> 
             <div className="header__left">
-                    <img className='logo' src="../assets/images/logo.png" alt="DreamFood" />
+                    <img className='logo' src="/assets/images/logo.png" alt="DreamFood" />
                     <div className="header__input">
                         <SearchIcon /> 
                         <input placeholder='Search' type="text" />
@@ -44,6 +47,16 @@ const Header = ({history}) => {
                                 <li className="nav-item">
                                     <Link to='/signin' className="nav-link"><i className='fas fa-sign-in-alt' /> Signin</Link>
                                 </li>
+                                <li className="nav-item">
+                                    <Link to='/shop' className="nav-link"><i className='fas fa-shopping-bag' /> Shop</Link>
+                                </li>
+                                <Link to="/cart">
+                                        <div className='menu__iteme'>
+                                            <Badge badgeContent={quantity} color="primary">
+                                            <ShoppingCartOutlined />
+                                            </Badge>
+                                        </div>
+                                 </Link>
                             </Fragment>
                         )}
                         {isAuthenticated() && isAuthenticated().role === 1 && (
@@ -54,18 +67,13 @@ const Header = ({history}) => {
                             </Fragment>
                         )}
                         {isAuthenticated() && isAuthenticated().role === 0 && (
-                            <Fragment>
+                          
                                 <li className="nav-item">
-                                    <Link to='/profile/:userId' className="nav-link"><i className='fas fa-home' /> MyProfile</Link>
+                                    <Link to='/shop' className="nav-link"><i className='fas fa-shopping-bag' /> Shop</Link>
                                 </li>
-                                {/* <div className='menu__iteme'>
-                                    <Badge badgeContent={quantity} color="primary">
-                                        <ShoppingCartOutlined />
-                                    </Badge>
-                                </div> */}
-                            </Fragment>
+                            
                         )}
-                        {isAuthenticated() && (
+                       {isAuthenticated() && ( 
                             <Fragment>
                                 <li className="nav-item">
                                     <button className="btn btn-link text-secondary 
@@ -74,19 +82,14 @@ const Header = ({history}) => {
                                 </li>
                                 <div className="header__right">
                                     <div className="header__info">
-                                        <FaceIcon /> 
-                                        {/* <h4>Hallo..Product.</h4> */}
+                                       <img src={user?.profilPic} alt={user?.username} />
+                                       <h6>Welkom {user?.username}</h6>
+                                      
                                     </div>
-                                    <Link to="/cart/userId">
-                                        <div className='menu__iteme'>
-                                            <Badge badgeContent={quantity} color="primary">
-                                            <ShoppingCartOutlined />
-                                            </Badge>
-                                        </div>
-                                        </Link>
+                                 
                                     </div>
-                            </Fragment>
-                        )}
+                            </Fragment>)}
+                        
                      </ul> 
                 </div>
                 </div>

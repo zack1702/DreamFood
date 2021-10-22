@@ -1,4 +1,3 @@
-
 import {START_LOADING, STOP_LOADING} from '../constants/loadingConstants'
 import { SHOW_ERROR_MESSAGE, SHOW_SUCCESS_MESSAGE} from '../constants/messageConstants'
 import { GET_PRODUCTS,CREATE_PRODUCT,GET_PRODUCT,DELETE_PRODUCT} from '../constants/productConstant'
@@ -83,6 +82,3 @@ export const getProduct = (productId) => async dispatch =>{
         dispatch({type:SHOW_ERROR_MESSAGE,payload: err.response.data.errorMessage})
     }
 }
-
-
-
