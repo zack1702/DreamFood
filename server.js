@@ -3,7 +3,7 @@ const app=express()
 const morgan= require('morgan')
 const multer = require("multer");
 const fileupload = require("express-fileupload");
-
+ 
 const cors =require('cors')
 const CategoryRoute=require('./routes/CategoryRoutes')
 const ProductRoute=require('./routes/ProductRoutes')
