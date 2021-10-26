@@ -3,7 +3,7 @@ const app=express()
 const morgan= require('morgan')
 const multer = require("multer");
 const fileupload = require("express-fileupload");
- 
+ const path=require('path')
 const cors =require('cors')
 const CategoryRoute=require('./routes/CategoryRoutes')
 const ProductRoute=require('./routes/ProductRoutes')
@@ -26,7 +26,20 @@ app.use(cors());
 app.use(express.json())
 app.use(cookieParser())
 
+//depolyement
+if(process.env.NODE_ENV==="production"){
+    app.use(express.static(path.join(__dirname,'/client/build')))
+    app.get('*',(req,res)=>{
+        res.sendFile(path.join(__dirname,'client','build','index.html'))
 
+
+    })
+}else{
+    app.get('/',(req,res)=>{
+        res.send('Api running')
+
+    })
+}
 //  get access to images in uploads folder middleware/express.static('file') path/uploads,
 app.use('/uploads',express.static('uploads'))
 
