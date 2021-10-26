@@ -13,6 +13,7 @@ import AdminRoute from './ProtectRoutes/AdminRoute'
 import UserRoute from './ProtectRoutes/UserRoute'
 import {BrowserRouter as Router,Switch , Route} from 'react-router-dom'
 import EditProduct from './Components/VendeurViews/EditProduct'
+import Order from './Pages/Order'
 
 
 const App = () => {
@@ -27,6 +28,7 @@ const App = () => {
         <Route path='/signin' exact component={SignIn} />
         <Route path='/product/:productId' exact component={Product} />
         <Route path='/cart' exact component={Cart} />
+        <Route path='/order' exact component={Order} />
         <AdminRoute  path='/admin/dashboard' component={VendeurProfile} />
         <AdminRoute  path='/admin/edit/product/:productId' component={EditProduct} />
         <UserRoute  path='/user/:userId' component={UserProfile} />

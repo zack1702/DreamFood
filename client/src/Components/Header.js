@@ -64,13 +64,22 @@ const Header = ({history}) => {
                                 <li className="nav-item">
                                     <Link to='/admin/dashboard' className="nav-link"><i className='fas fa-home' /> Dashboard</Link>
                                 </li>
+                                <Link to="/cart">
+                                        <div className='menu__iteme'>
+                                            <Badge badgeContent={quantity} color="primary">
+                                            <ShoppingCartOutlined />
+                                            </Badge>
+                                        </div>
+                                 </Link>
                             </Fragment>
                         )}
                         {isAuthenticated() && isAuthenticated().role === 0 && (
-                          
+                          <Fragment>
                                 <li className="nav-item">
                                     <Link to='/shop' className="nav-link"><i className='fas fa-shopping-bag' /> Shop</Link>
                                 </li>
+                             
+                         </Fragment>
                             
                         )}
                        {isAuthenticated() && ( 
@@ -86,6 +95,13 @@ const Header = ({history}) => {
                                        <h6>Welkom {user?.username}</h6>
                                       
                                     </div>
+                                    <Link to="/cart">
+                                <div className='menu__iteme'>
+                                    <Badge badgeContent={quantity} color="primary">
+                                    <ShoppingCartOutlined />
+                                    </Badge>
+                                </div>
+                         </Link>
                                  
                                     </div>
                             </Fragment>)}

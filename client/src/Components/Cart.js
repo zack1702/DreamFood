@@ -1,8 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
  import {useSelector,useDispatch} from 'react-redux'
- import {removeFromCart} from '../redux/actions/cartAction'
+ import {createCart, removeFromCart} from '../redux/actions/cartAction'
  import {ADD_TO_CART} from '../redux/constants/cartConstants'
+import { isAuthenticated } from '../helpers/auth';
 const Cart = ({history}) => {
   const dispatch=useDispatch();
     // const cartItems = localStorage.getItem('cart')
@@ -10,7 +11,7 @@ const Cart = ({history}) => {
 	// 	: [];
 
     const {cart}=useSelector(state=>state.cart)
-
+	const {user}=useSelector(state=>state.users)
     const handleGoBack= ()=>{
         history.goBack();
     }
@@ -32,11 +33,23 @@ const Cart = ({history}) => {
 			payload: cart,
 		});
 	};
-    // const handleRemoveItem=(e,product)=>{
-    //     e.preventDefault();
-    //     dispatch(removeFromCart(product))
+    const handSubmitCart=(e)=>{
+		e.preventDefault()
+		if(!isAuthenticated()){
+			history.push("/signin")
+		}else{
+			const userId= user?._id
+			const formData= new FormData()
+			formData.append('user',userId)
+			formData.append('cartItems',cart.product)
+			formData.append('total',cart.total)
+			
+			
+			dispatch(createCart(formData))
+			history.push('/order')
+		}
 
-    // }
+	}
         
     return (
 
@@ -58,6 +71,7 @@ const Cart = ({history}) => {
 					<div className='jumbotron'>
 						<h1 className='display-4'>Cart</h1>
 					</div>
+					
                     <div className='row'>
                         <div className='col-md-8'>
                                     <table class="table">
@@ -141,6 +155,7 @@ const Cart = ({history}) => {
                                         </table>
 
                         </div>
+						<form onSubmit={handSubmitCart}>
                         <div className='col-md-4 border-left pl-4'>
 							<h2>Cart Summary</h2>
 							<p className='font-weight-light text-muted border-bottom'>
@@ -148,8 +163,9 @@ const Cart = ({history}) => {
 									? '(1) Item'
 									: `(${cart.length}) Items`}
 							</p>
-							<p className='font-weight-bold'>
+							<p className='font-weight-bold' value={cart.total} >
 								Total: $
+								
 								{cart
 									.reduce(
 										(currentSum, currentCartItem) =>
@@ -160,11 +176,12 @@ const Cart = ({history}) => {
 									)
 									.toFixed(2)}
 							</p>
-							<button className='btn btn-dark btn-large btn-block mb-5 py-2'>
-								Order
+							<button className='btn btn-dark btn-large btn-block mb-5 py-2'
+							type="submit">
+								Checkout and Order
 							</button>
 						</div>
-
+					</form>
                     </div>
                 </>)}
         </section>            

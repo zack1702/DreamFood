@@ -5,7 +5,7 @@ const cartController = require('../Controllers/cartController')
 const { authenticateJWT } = require('../middleware/Authenticator')
 
 
-router.post('/:userId',authenticateJWT ,cartController.createCart)
+router.post('/',authenticateJWT ,cartController.createCart)
 router.get("/:userId",authenticateJWT , cartController.getMyCart)
 router.delete("/:id",authenticateJWT , cartController.deleteCart)
 

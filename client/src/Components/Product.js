@@ -47,7 +47,8 @@ const Product = ({match,history}) => {
           </button>
           <div className='card'>
             <div className='productImg'>
-                <img className='img-fluid w-100 'id='img' src={`/uploads/${product?.fileName}`} alt=''/>
+                <img 
+													className='img-fluid w-100 img-thumbnail' src={`/uploads/${product?.fileName}`} alt=''/>
             </div>
             <div className='details'>
                       <h5>{product?.product_name}</h5>

@@ -5,9 +5,9 @@ const orderController = require('../Controllers/orderController')
 const { authenticateJWT } = require('../middleware/Authenticator')
 
 
-router.post('/addOrder' ,orderController.createOrder)
-router.get("/:userId" , orderController.getMyOrder)
-router.delete("/:id",authenticateJWT , orderController.deleteOrder)
+router.post('/:userId',authenticateJWT ,orderController.createOrder)
+router.get("/:userId" , authenticateJWT,orderController.getMyOrder)
+router.delete("/:userId/:id",authenticateJWT , orderController.deleteOrder)
 
-router.put('/:id',authenticateJWT, orderController.editOrder)
+router.put('/:userId/:id',authenticateJWT, orderController.editOrder)
 module.exports = router;

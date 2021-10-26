@@ -1,28 +1,33 @@
 const mongoose = require("mongoose");
 
-const CartSchema = new mongoose.Schema(
+const cartSchema = new mongoose.Schema(
   {
-    products: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Product'
-    },],
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
     },
-    quantity: Number,
-    price: {
+    total: {
       type: Number,
       default: 0
     },
+    cartItems:[{
+        product:{
+            type:mongoose.Schema.Types.ObjectId,
+            ref:"Product"
+        },
+        quantity:{
+            type:Number,
+            default:1
+        },
+        subTotal:{
+            type:Number,
+            default:0
+        }
+    }],
    
-    status: {
-      type: String,
-      default: 'Not processed',
-      enum: ['Not processed', 'Processing', 'Shipped', 'Delivered', 'Cancelled']
-    }
+    status: { type: String, default: "pending" },
   },
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Cart", CartSchema);
+module.exports = mongoose.model("Cart", cartSchema);

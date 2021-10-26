@@ -2,10 +2,6 @@ const mongoose = require("mongoose");
 
 const OrderSchema = new mongoose.Schema(
   {
-    cart: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Cart'
-    },
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User'
@@ -13,6 +9,12 @@ const OrderSchema = new mongoose.Schema(
     total: {
       type: Number,
       default: 0
+    },
+    telephone:{
+      type:String,
+    },
+    adress:{
+      type:String,
     },
     status: { type: String, default: "pending" },
   },

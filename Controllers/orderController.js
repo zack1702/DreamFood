@@ -1,26 +1,27 @@
 const Order = require('../Models/Order')
-const Cart = require('../Models/Cart')
+
 
 exports.createOrder = async (req, res) => {
   try {
-    const cart = req.body.cartId;
+    const user = req.params.userId;
     const total = req.body.total;
-    const user = req.body.userId;
-
+    const adress = req.body.adress;
+    const telephone = req.body.telephone;
     const order = new Order({
-      cart,
+     telephone,
+     adress,
       user,
       total
     });
 
     const orderDoc = await order.save();
-     const cartDoc = await Cart.findById(orderDoc.cart._id)
+    
 
     const newOrder = {
       _id: orderDoc._id,
       user: orderDoc.user,
       total: orderDoc.total,
-      products: cartDoc.products
+     
     };
     res.status(200).json({
       success: true,

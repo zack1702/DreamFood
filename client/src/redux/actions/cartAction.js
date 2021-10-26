@@ -1,4 +1,9 @@
-import { ADD_TO_CART,DELETE_FROM_CART } from '../constants/cartConstants';
+import { ADD_TO_CART,DELETE_FROM_CART,CREATE_CART } from '../constants/cartConstants';
+import {START_LOADING, STOP_LOADING} from '../constants/loadingConstants'
+import { SHOW_ERROR_MESSAGE, SHOW_SUCCESS_MESSAGE} from '../constants/messageConstants'
+import axios from 'axios'
+
+
 
 export const addToCart = (product,quantity) => async dispatch => {
 	// if cart already exists in local storage, use it, otherwise set to empty array
@@ -50,3 +55,19 @@ export const addToCart = (product,quantity) => async dispatch => {
  	
  	
    };
+
+   export const createCart = (formData) => async dispatch =>{
+    try{
+        
+        dispatch({type : START_LOADING})
+        const response = await axios.post( '/api/cart' ,formData);
+        dispatch({type:STOP_LOADING})
+        dispatch({type:SHOW_SUCCESS_MESSAGE,payload: response.data.successMessage})
+        dispatch({type:CREATE_CART,payload: response.data.cart})
+        
+    }catch(err){
+        console.log('createCart Api err',err)
+        dispatch({type:STOP_LOADING})
+        dispatch({type:SHOW_ERROR_MESSAGE,payload: err.response.data.errorMessage})
+    }
+}
