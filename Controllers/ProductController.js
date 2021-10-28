@@ -31,9 +31,11 @@ exports.create = async (req, res) => {
 }
 
 exports.readAll = async (req, res) => {
-    console.log(req.file)
+    
+    
     try {
       const products = await Product.find({}).limit(6)
+      
         res.json({products})
     } catch (err) {
         console.log('product create error: ', err)
@@ -72,7 +74,8 @@ exports.deleteProduct = async (req, res) => {
 }
 
 exports.getProduct = async (req, res) => {
-    
+    console.log(req)
+    console.log(res)
     try {
         const productId = req.params.productId
         const product = await Product.findById(productId)
