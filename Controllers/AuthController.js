@@ -27,7 +27,10 @@ exports.signinController = async (req, res) => {
             user: {
                 _id: user._id,
             }
+            
         }
+        console.log(payload)
+
         jwt.sign(payload,process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIREIN }, (err, token) => {
             if(err) console.log('jwt error: ', err);
             const { _id, username, email, role,profilPic }  = user;
