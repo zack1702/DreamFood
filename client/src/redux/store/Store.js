@@ -21,6 +21,7 @@ const reducer = combineReducers({
 const initialState = {}
 const middleware = [thunk]
 
-const store = createStore(reducer,initialState,composeWithDevTools(applyMiddleware(...middleware)))
+const store = createStore(reducer,initialState,composeWithDevTools(applyMiddleware(...middleware),
+window.REDUX_DEVTOOLS_EXTENSION ? window.REDUX_DEVTOOLS_EXTENSION() : f => f ))
 
 export default store
