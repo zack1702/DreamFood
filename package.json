@@ -2,7 +2,7 @@
   "name": "ecommerce",
   "version": "1.0.0",
   "description": "",
-  "proxy": "http://localhost:3000",
+  "proxy": "http://whispering-lake-29684.herokuapp.com/:3000",
   "main": "server.js",
   "engines": {
     "node": "14.x",
