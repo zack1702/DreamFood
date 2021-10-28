@@ -18,7 +18,7 @@ export const getNewArrivals = (sortBy='desc',limit=6) => async dispatch =>{
     }catch(err){
         console.log('newProducts Api err',err)
         dispatch({type:STOP_LOADING})
-        dispatch({type:SHOW_ERROR_MESSAGE,payload: err.response.data.errorMessage})
+        // dispatch({type:SHOW_ERROR_MESSAGE,payload: err.response.data.errorMessage})
     }
 }
 
